@@ -1,0 +1,126 @@
+{% extends 'recomendador/base.html' %}
+{% load static %}
+
+{% block contenido %}
+<section class="dashboard-section py-5">
+    <div class="container">
+        <!-- Bienvenida -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="welcome-card p-4" data-aos="fade-up">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-circle bg-warning me-3">
+                            <span class="fw-bold">{{ user.username|first|upper }}</span>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold mb-1">¡Bienvenido, {{ user.username }}!</h2>
+                            <p class="text-white-50 mb-0">Continúa tu viaje de aprendizaje en programación</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Estadísticas del usuario -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card-dashboard">
+                    <i class="fas fa-clock fa-2x text-warning mb-3"></i>
+                    <h3 class="fw-bold">0</h3>
+                    <p>Horas de estudio</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card-dashboard">
+                    <i class="fas fa-check-circle fa-2x text-warning mb-3"></i>
+                    <h3 class="fw-bold">0/10</h3>
+                    <p>Módulos completados</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card-dashboard">
+                    <i class="fas fa-trophy fa-2x text-warning mb-3"></i>
+                    <h3 class="fw-bold">0</h3>
+                    <p>Logros obtenidos</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Próximos pasos / Recomendaciones -->
+        <div class="row">
+            <div class="col-lg-8 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="dashboard-card">
+                    <h4 class="mb-4">Continúa tu aprendizaje</h4>
+                    
+                    <div class="progress-item mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Fundamentos de Programación</span>
+                            <span class="text-warning">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Lógica de Programación</span>
+                            <span class="text-warning">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Introducción a Python</span>
+                            <span class="text-warning">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn btn-warning w-100 mt-4">
+                        <i class="fas fa-play me-2"></i>Comenzar a aprender
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="dashboard-card">
+                    <h4 class="mb-4">Próximos pasos</h4>
+                    
+                    <div class="next-steps-list">
+                        <div class="next-step-item">
+                            <i class="fas fa-circle text-warning me-3" style="font-size: 8px;"></i>
+                            <span>Completa tu perfil</span>
+                        </div>
+                        <div class="next-step-item">
+                            <i class="fas fa-circle text-warning me-3" style="font-size: 8px;"></i>
+                            <span>Toma el diagnóstico inicial</span>
+                        </div>
+                        <div class="next-step-item">
+                            <i class="fas fa-circle text-warning me-3" style="font-size: 8px;"></i>
+                            <span>Primer módulo: Fundamentos</span>
+                        </div>
+                        <div class="next-step-item">
+                            <i class="fas fa-circle text-warning me-3" style="font-size: 8px;"></i>
+                            <span>Conoce el chatbot</span>
+                        </div>
+                    </div>
+                    
+                    <hr class="bg-white-50">
+                    
+                    <h5 class="mb-3">Recomendado para ti</h5>
+                    <div class="recommendation-item">
+                        <p class="mb-1">Curso: Python desde cero</p>
+                        <small class="text-white-50">Basado en tu nivel principiante</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
