@@ -1,0 +1,50 @@
+{% extends 'recomendador/admin_base.html' %}
+{% load static %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Todas las Consultas</h2>
+    <span class="badge bg-warning text-dark">{{ total_consultas }} consultas totales</span>
+</div>
+
+<div class="dashboard-card">
+    <div class="table-responsive">
+        <table class="table table-admin">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Usuario</th>
+                    <th>Pregunta</th>
+                    <th>Respuesta (Preview)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in consultas %}
+                <tr>
+                    <td style="white-space: nowrap;">{{ consulta.fecha|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'admin_usuario_ver' consulta.usuario.id %}" class="text-warning">
+                            {{ consulta.usuario.username }}
+                        </a>
+                    </td>
+                    <td style="max-width: 300px;">
+                        <div class="text-truncate" style="max-width: 300px;" title="{{ consulta.pregunta }}">
+                            {{ consulta.pregunta }}
+                        </div>
+                    </td>
+                    <td style="max-width: 400px;">
+                        <div class="text-truncate" style="max-width: 400px;" title="{{ consulta.respuesta }}">
+                            {{ consulta.respuesta|truncatechars:150 }}
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay consultas registradas aún</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

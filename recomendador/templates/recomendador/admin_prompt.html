@@ -1,0 +1,51 @@
+{% extends 'recomendador/admin_base.html' %}
+{% load static %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Editor de Prompt - IA</h2>
+    <div>
+        <small class="text-muted">
+            Última actualización: {{ prompt.fecha_actualizacion|date:"d/m/Y H:i" }}
+            {% if prompt.ultima_actualizacion_por %}
+                por {{ prompt.ultima_actualizacion_por.username }}
+            {% endif %}
+        </small>
+    </div>
+</div>
+
+<div class="dashboard-card">
+    <div class="alert alert-info mb-4">
+        <i class="fas fa-info-circle me-2"></i>
+        Este prompt será utilizado por la IA para generar respuestas a los usuarios. 
+        Define el comportamiento, personalidad y conocimientos del asistente.
+    </div>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="prompt-editor">
+            <label class="form-label fw-bold mb-3">
+                <i class="fas fa-robot me-2 text-warning"></i>Prompt del Sistema
+            </label>
+            <textarea name="prompt_texto" rows="15" class="form-control">{{ prompt.prompt_texto }}</textarea>
+            
+            <div class="mt-4 d-flex justify-content-end">
+                <button type="submit" class="btn btn-warning px-5 py-2">
+                    <i class="fas fa-save me-2"></i>Guardar Prompt
+                </button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="alert alert-secondary mt-4">
+        <h6><i class="fas fa-lightbulb me-2"></i>Tips para un buen prompt:</h6>
+        <ul class="mb-0">
+            <li>Define claramente el rol de la IA (ej: "Eres un tutor de Python...")</li>
+            <li>Establece las reglas de comportamiento (ej: "Responde con ejemplos prácticos")</li>
+            <li>Define el tono y estilo (ej: "Sé amable, paciente y motivador")</li>
+            <li>Establece límites (ej: "No respondas preguntas fuera de programación")</li>
+            <li>Incluye instrucciones sobre cómo estructurar las respuestas</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

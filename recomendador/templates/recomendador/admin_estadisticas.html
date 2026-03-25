@@ -1,0 +1,82 @@
+{% extends 'recomendador/admin_base.html' %}
+{% load static %}
+
+{% block admin_content %}
+<h2 class="mb-4">Estadísticas Globales</h2>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card-admin text-center">
+            <i class="fas fa-users fa-3x text-warning mb-3"></i>
+            <h3 class="fw-bold">{{ total_usuarios }}</h3>
+            <p>Total Usuarios</p>
+            <small class="text-muted">Activos: {{ usuarios_activos }} | Inactivos: {{ usuarios_inactivos }}</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-admin text-center">
+            <i class="fas fa-comments fa-3x text-warning mb-3"></i>
+            <h3 class="fw-bold">{{ total_consultas }}</h3>
+            <p>Total Consultas</p>
+            <small class="text-muted">Hoy: {{ consultas_hoy }} | Semana: {{ consultas_semana }}</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-admin text-center">
+            <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+            <h3 class="fw-bold">{{ progreso_promedio }}%</h3>
+            <p>Progreso Promedio</p>
+            <small class="text-muted">de todos los usuarios</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-admin text-center">
+            <i class="fas fa-percent fa-3x text-warning mb-3"></i>
+            <h3 class="fw-bold">{{ usuarios_activos|floatformat:1 }}%</h3>
+            <p>Tasa de Actividad</p>
+            <small class="text-muted">{{ usuarios_activos }}/{{ total_usuarios }} activos</small>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="dashboard-card">
+            <h4 class="mb-3">Top 5 Usuarios más activos</h4>
+            <div class="table-responsive">
+                <table class="table table-admin">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Consultas</th>
+                            <th>Progreso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in top_usuarios %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><strong>{{ usuario.username }}</strong></td>
+                            <td>{{ usuario.nombre_completo }}</td>
+                            <td><span class="badge bg-warning text-dark">{{ usuario.num_consultas }}</span></td>
+                            <td>
+                                <div class="progress" style="width: 100px;">
+                                    <div class="progress-bar bg-warning" style="width: {{ usuario.progreso_promedio }}%"></div>
+                                </div>
+                                {{ usuario.progreso_promedio }}%
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No hay usuarios con consultas aún</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

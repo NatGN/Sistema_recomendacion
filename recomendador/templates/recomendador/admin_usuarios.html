@@ -1,0 +1,73 @@
+{% extends 'recomendador/admin_base.html' %}
+{% load static %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Usuarios</h2>
+    <span class="badge bg-warning text-dark">{{ usuarios|length }} usuarios totales</span>
+</div>
+
+<div class="dashboard-card">
+    <div class="table-responsive">
+        <table class="table table-admin">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre completo</th>
+                    <th>Email</th>
+                    <th>Consultas</th>
+                    <th>Progreso</th>
+                    <th>Registro</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>
+                        <strong>{{ usuario.username }}</strong>
+                        {% if usuario.is_admin %}<span class="badge bg-warning text-dark ms-1">Admin</span>{% endif %}
+                    </td>
+                    <td>{{ usuario.nombre_completo }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.total_consultas }}</td>
+                    <td>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: {{ usuario.progreso_total }}%"></div>
+                        </div>
+                        <small>{{ usuario.progreso_total }}%</small>
+                    </td>
+                    <td>{{ usuario.fecha_registro|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if usuario.is_active %}
+                            <span class="badge bg-success">Activo</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'admin_usuario_ver' usuario.id %}" class="btn btn-sm btn-info mb-1">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        {% if not usuario.is_admin or usuario.id != user.id %}
+                        <form method="POST" action="{% url 'admin_usuario_toggle' usuario.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if usuario.is_active %}btn-danger{% else %}btn-success{% endif %}"
+                                    onclick="return confirm('¿Estás seguro de {% if usuario.is_active %}desactivar{% else %}activar{% endif %} este usuario?')">
+                                <i class="fas {% if usuario.is_active %}fa-ban{% else %}fa-check{% endif %}"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No hay usuarios registrados</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

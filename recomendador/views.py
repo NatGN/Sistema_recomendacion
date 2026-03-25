@@ -7,7 +7,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 from .forms import RegistroUsuarioForm
-from .models import Usuario
+from .models import Usuario, EstadisticasGlobales
+from .admin_views import es_admin  # Importamos la función
 
 # Create your views here.
 
@@ -82,7 +83,12 @@ def login_view(request):
             if user.is_active:
                 login(request, user)
                 messages.success(request, f'¡Bienvenido {user.username}!')
-                return redirect('dashboard')
+                
+                # Redirigir según el rol del usuario
+                if es_admin(user):
+                    return redirect('admin_panel')
+                else:
+                    return redirect('dashboard')
             else:
                 messages.error(request, 'Tu cuenta no ha sido activada. Revisa tu correo para activarla.')
         else:
@@ -97,4 +103,7 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
+    # Verificar si es admin, si es admin redirigir a su panel
+    if es_admin(request.user):
+        return redirect('admin_panel')
     return render(request, 'recomendador/dashboard.html', {'user': request.user})
